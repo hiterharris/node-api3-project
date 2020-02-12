@@ -13,8 +13,6 @@ server.get('/', logger, (req, res) => {
 
 server.use('/users', userRouter);
 
-//custom middleware
-
 function logger(req, res, next) {
   console.log(`${req.method} request to ${req.originalUrl}`); // Add timestamp
   next();
