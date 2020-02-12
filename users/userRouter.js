@@ -5,11 +5,23 @@ const userDb = require('./userDb');
 const router = express.Router();
 
 router.post('/', (req, res) => {
-  // do your magic!
+  userDb.insert(req.body)
+    .then(user => {
+      res.status(201).json(user);
+    })
+    .catch(error => {
+      console.log(error);
+    })
 });
 
 router.post('/:id/posts', (req, res) => {
-  // do your magic!
+  userDb.insert(req.body)
+  .then(post => {
+    res.status(201).json(post);
+  })
+  .catch(error => {
+    console.log(error);
+  })
 });
 
 router.get('/', (req, res) => {
@@ -23,19 +35,34 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  // do your magic!
+  userDb.getById(req.params.id)
+  .then(user => {
+    res.status(200).json(user);
+  })
+  .catch(error => {
+    console.log(error);
+  })
 });
 
 router.get('/:id/posts', (req, res) => {
-  // do your magic!
+  userDb.getUserPosts(req.params.id)
+    .then(posts => {
+      res.status(200).json(posts);
+    })
 });
 
 router.delete('/:id', (req, res) => {
-  // do your magic!
+  userDb.remove(req.params.id)
+  .then(remove => {
+    res.status(200).json(remove)
+  })
 });
 
 router.put('/:id', (req, res) => {
-  // do your magic!
+  userDb.update(req.params.id, req.body)
+  .then(user => {
+    res.status(200).json(user);
+  })
 });
 
 //custom middleware
