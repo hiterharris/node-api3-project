@@ -5,7 +5,7 @@ const userDb = require('./userDb');
 const router = express.Router();
 
 
-router.post('/', (req, res) => {
+router.post('/', validateUser(), (req, res) => {
   userDb.insert(req.body)
     .then(user => {
       res.status(201).json(user);
@@ -59,7 +59,7 @@ router.delete('/:id', validateUserId(), (req, res) => {
   })
 });
 
-router.put('/:id', validateUserId(), (req, res) => {
+router.put('/:id', validateUser(), validateUserId(), (req, res) => {
   userDb.update(req.params.id, req.body)
   .then(user => {
     res.status(200).json(user);
@@ -86,9 +86,21 @@ function validateUserId() {
   };
 }
 
-function validateUser(req, res, next) {
-  // do your magic!
+function validateUser() {
+  return (req, res, next) => {
+    resource = {
+      name: req.body.name
+    };
+
+    if (!req.body.name) {
+      return res.status(404).json({ message: "missing user data" });
+    } else {
+      req.user = resource;
+      next();
+    }
+  };
 }
+
 
 function validatePost(req, res, next) {
   // do your magic!

@@ -14,7 +14,8 @@ server.get('/', logger, (req, res) => {
 server.use('/users', userRouter);
 
 function logger(req, res, next) {
-  console.log(`${req.method} request to ${req.originalUrl}`); // Add timestamp
+  req.time = Date.now();
+  console.log(`${req.method} request to ${req.originalUrl} at ${req.time}`);
   next();
 }
 
