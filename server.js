@@ -1,6 +1,7 @@
 const express = require('express');
 
 const userRouter = require('./users/userRouter');
+const postRouter = require('./posts/postRouter');
 
 const server = express();
 
@@ -12,6 +13,7 @@ server.get('/', logger, (req, res) => {
 });
 
 server.use('/users', userRouter);
+server.use('/posts', postRouter);
 
 function logger(req, res, next) {
   req.time = Date.now();
